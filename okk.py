@@ -17,7 +17,7 @@ last_command_time = 0
 command_delay = 0.1
 last_command = None
 last_space_time = 0
-space_delay = 1.0  # 1 second delay for space key
+space_delay = 1.0  
 
 with mp_hands.Hands(
     model_complexity=0,
@@ -66,8 +66,7 @@ with mp_hands.Hands(
                             continue
 
         current_time = time.time()
-        
-        # Space key 
+    
         if current_time - last_space_time >= space_delay:
             inputkey.press_key('space')
             last_space_time = current_time
