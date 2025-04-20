@@ -16,6 +16,8 @@ cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
 last_command_time = 0
 command_delay = 0.1
 last_command = None
+last_space_time = 0
+space_delay = 1.0  # 1 second delay for space key
 
 with mp_hands.Hands(
     model_complexity=0,
@@ -26,7 +28,7 @@ with mp_hands.Hands(
     while cap.isOpened():
         success, image = cap.read()
         if not success:
-            print("Camera error...")
+            print("sorry bhai Camera error...")
             continue
 
         if cv2.waitKey(1) & 0xFF == ord('q'):
@@ -65,9 +67,14 @@ with mp_hands.Hands(
 
         current_time = time.time()
         
+        # Space key 
+        if current_time - last_space_time >= space_delay:
+            inputkey.press_key('space')
+            last_space_time = current_time
+         
         if len(co) == 2:
             xm, ym = (co[0][0] + co[1][0]) / 2, (co[0][1] + co[1][1]) / 2
-            radius = 80
+            radius = 100
             
             try:
                 m = (co[1][1]-co[0][1])/(co[1][0]-co[0][0])
@@ -182,7 +189,6 @@ with mp_hands.Hands(
         cv2.namedWindow('Hand Gesture Control', cv2.WINDOW_NORMAL)
         cv2.imshow('Hand Gesture Control', cv2.flip(image, 1))
       
-        cv2.resizeWindow('Hand Gesture Control', 800, 600)
-
+        cv2.resizeWindow('Hand Gesture Control', 560, 420)
 cap.release()
 cv2.destroyAllWindows()
