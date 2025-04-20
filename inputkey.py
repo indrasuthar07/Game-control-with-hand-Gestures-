@@ -5,6 +5,7 @@ keys = {
     "a":0x1E,
     "s":0x1F,
     "d":0x20,
+    "space":0x39,
 }
 PUL = ctypes.POINTER(ctypes.c_ulong)
 class KeyBdInput(ctypes.Structure):
